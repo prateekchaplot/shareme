@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 
 import shareVideo from '../assets/share.mp4'
-import sanityClient from '../sanityClient'
+import { client } from '../sanityClient'
 
 import { logoWhite } from '../components'
 
@@ -23,7 +23,7 @@ const Login = () => {
       image: user.picture
     }
 
-    sanityClient.createIfNotExists(doc)
+    client.createIfNotExists(doc)
       .then(() => navigate('/', { replace: true }))
   }
 

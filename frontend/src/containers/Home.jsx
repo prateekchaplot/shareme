@@ -3,7 +3,7 @@ import { HiMenu } from 'react-icons/hi'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { Link, Route, Routes } from 'react-router-dom'
 
-import sanityClient from '../sanityClient'
+import { client } from '../sanityClient'
 import { logo, Sidebar, UserProfile } from '../components'
 import { userQuery } from '../utils/data'
 import Pins from './Pins'
@@ -15,12 +15,13 @@ const Home = () => {
   const scrollRef = useRef(null)
 
   const userInfo = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear()
+  const userId = userInfo?.sub
 
   useEffect(() => {
-    const query = userQuery(userInfo.sub)
-    sanityClient.fetch(query)
+    const query = userQuery(userId)
+    client.fetch(query)
       .then((data) => setUser(data[0]))
-  }, [userInfo])
+  }, [userId])
 
   useEffect(() => scrollRef.current.scrollTo(0, 0), [])
 
