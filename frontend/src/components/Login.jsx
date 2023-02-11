@@ -1,14 +1,30 @@
 import React from 'react'
 import { GoogleLogin } from '@react-oauth/google'
+import jwt_decode from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
+
 import shareVideo from '../assets/share.mp4'
-import logo from '../assets/logowhite.png'
+import sanityClient from '../sanityClient'
+
+import { logoWhite } from '../components'
 
 const Login = () => {
 
+  const navigate = useNavigate()
+
   const responseGoogle = (response) => {
-    console.log(response)
-    localStorage.setItem('user', JSON.stringify(response))
-    // const { name, googleId, imageUrl } =
+    let user = jwt_decode(response.credential)
+    localStorage.setItem('user', JSON.stringify(user))
+    
+    const doc = {
+      _id: user.sub,
+      _type: 'user',
+      userName: user.given_name,
+      image: user.picture
+    }
+
+    sanityClient.createIfNotExists(doc)
+      .then(() => navigate('/', { replace: true }))
   }
 
   return (
@@ -26,7 +42,7 @@ const Login = () => {
 
         <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay">
           <div className="p-5">
-            <img src={logo} width='130px' alt='logo' />
+            <img src={logoWhite} width='130px' alt='logo' />
           </div>
 
           <div className="shadow-2xl">
@@ -44,7 +60,6 @@ const Login = () => {
               )}
               onSuccess={responseGoogle}
               onError={responseGoogle}
-              cookiePolicy='single_host_origin'
             />
           </div>
         </div>
