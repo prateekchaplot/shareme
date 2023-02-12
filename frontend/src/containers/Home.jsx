@@ -6,6 +6,7 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { client } from '../sanityClient'
 import { logo, Sidebar, UserProfile } from '../components'
 import { userQuery } from '../utils/data'
+import { fetchUser } from '../utils/fetchUser'
 import Pins from './Pins'
 
 const Home = () => {
@@ -14,7 +15,7 @@ const Home = () => {
   const [user, setUser] = useState(null)
   const scrollRef = useRef(null)
 
-  const userInfo = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear()
+  const userInfo = fetchUser()
   const userId = userInfo?.sub
 
   useEffect(() => {
