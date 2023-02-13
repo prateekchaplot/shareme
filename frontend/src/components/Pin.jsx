@@ -70,11 +70,16 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
               </div>
 
               {alreadySaved ? (
-                <button type='button' className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none'>
+                <button
+                  type='button'
+                  className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none'
+                >
                  {save?.length} Saved
                 </button>
               ) : (
-                <button type='button' className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none'
+                <button
+                  type='button'
+                  className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none'
                   onClick={(e) => {
                     e.stopPropagation()
                     savePin(_id)
@@ -92,6 +97,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                   target='_blank'
                   rel='noreferrer'
                   className='bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <BsFillArrowUpRightCircleFill />
                   {destination.length > 20 ? destination.slice(8, 20) : destination}
